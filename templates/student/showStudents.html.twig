@@ -1,9 +1,16 @@
-<table>
+<a href="{{ path('student_add') }}">Add Student</a>
+<hr />
+<br />
+<table border="1">
     <tr>
         <th>Id</th>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>Detail</th>
+        <th>Delete</th>
+        <th>Update</th>
     </tr>
+
     {% for student in students %}
     <tr>
         <td>
@@ -14,6 +21,36 @@
         </td>
         <td>
             {{ student.lastName }}
+        </td>
+        <td>
+            <a
+                href="{{
+                    path('detail_Student', {
+                        id: student.id
+                    })
+                }}"
+                >Details Student</a
+            >
+        </td>
+        <td>
+            <a
+                href="{{
+                    path('delete_Student', {
+                        id: student.id
+                    })
+                }}"
+                >Delete Student</a
+            >
+        </td>
+        <td>
+            <a
+                href="{{
+                    path('student_update', {
+                        id: student.id
+                    })
+                }}"
+                >Update Student</a
+            >
         </td>
     </tr>
     {% endfor %}
