@@ -1,0 +1,16 @@
+<h1>La liste des classes
+</h1>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  {% for cl in c %}
+    <tr>
+      <td>{{cl.id}}</td>
+      <td>{{cl.Name}}</td>
+
+      <tr>
+        {% endfor%}
+
+      </table>
