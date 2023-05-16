@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Form\SearchStudentType;
 use App\Form\StudentType;
 use App\Repository\StudentRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,11 +42,31 @@ class StudentController extends AbstractController
     public function showStudents(StudentRepository $st): Response
     {
         // $students = $em->getRepository(Student::class)->findAll();
-        $students = $st->findAll();
+        $students = $st->orderById();
         return $this->render(
             'student/showStudents.html.twig',
             [
                 'students' => $students
+            ]
+        );
+    }
+
+    #[Route('/showStudentsSearch', name: 'student_showSearch')]
+    public function showStudentsSearch(Request $req, StudentRepository $st): Response
+    {
+        // $students = $em->getRepository(Student::class)->findAll();
+        $students = $st->findAll();
+        $form = $this->createForm(SearchStudentType::class);
+        $form->handleRequest($req);
+        if ($form->isSubmitted()) {
+            $id = $form['id']->getData();
+            $students = $st->searchById($id);
+        }
+        return $this->render(
+            'student/showStudents.html.twig',
+            [
+                'students' => $students,
+                'form' => $form->createView()
             ]
         );
     }
